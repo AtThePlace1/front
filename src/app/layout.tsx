@@ -25,11 +25,7 @@ export default function RootLayout({
           </h1>
           <Menu />
         </header>
-        <main className="mx-auto mt-5">
-          <article className="flex h-full w-[320px] flex-col">
-            {children}
-          </article>
-        </main>
+        <main className="mx-auto flex h-full flex-col">{children}</main>
       </body>
     </html>
   );
