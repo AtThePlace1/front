@@ -1,8 +1,12 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import cafeList from '../mock/cafe.json';
+import CafeCard from '../_components/cafeCard';
 
 export default function Map() {
+  const mapRef = useRef<null | naver.maps.Map>(null);
+
   useEffect(() => {
     const initMap = () => {
       const mapOptions = {
@@ -10,7 +14,30 @@ export default function Map() {
         zoom: 10,
       };
 
-      new naver.maps.Map('map', mapOptions);
+      const map = new naver.maps.Map('map', mapOptions);
+
+      cafeList.cafeList.forEach((cafe) => {
+        new naver.maps.Marker({
+          position: new naver.maps.LatLng(cafe.위도, cafe.경도),
+          map: map,
+          title: cafe.name,
+        });
+      });
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          const currentLocation = new naver.maps.LatLng(
+            position.coords.latitude,
+            position.coords.longitude
+          );
+          new naver.maps.Marker({
+            position: currentLocation,
+            map: map,
+            title: 'My Location',
+          });
+          map.setCenter(currentLocation);
+        });
+      }
     };
 
     if (window.naver && window.naver.maps) {
@@ -23,9 +50,34 @@ export default function Map() {
     }
   }, []);
 
+  // 현재 위치로 지도 중심 이동
+  const handleCurrentLocationClick = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const currentLocation = new naver.maps.LatLng(
+          position.coords.latitude,
+          position.coords.longitude
+        );
+        if (mapRef.current) {
+          mapRef.current.setCenter(currentLocation);
+        }
+      });
+    }
+  };
+
   return (
-    <div className="flexCenter h-full w-full">
+    <div className="flexCenter relative h-full w-full">
       <div id="map" className="h-full w-full"></div>
+      <button
+        onClick={handleCurrentLocationClick}
+        className="absolute left-5 top-5 rounded bg-blue-500 p-2 text-white"
+      >
+        내 위치
+      </button>
+      <div className="absolute bottom-0 right-4 bg-slate-400">
+        {' '}
+        <button>내 위치</button>
+      </div>
     </div>
   );
 }

@@ -58,7 +58,7 @@ export default function Login() {
   };
 
   return (
-    <div className="items-centerm mt-10 flex flex-col justify-center rounded-xl bg-[#353434]/75 p-10">
+    <div className="flexCenter mt-10 w-[300px] flex-col rounded-xl bg-[#353434]/75 p-10">
       <div className="mb-8 text-center">
         <h2 className="text-lg font-semibold text-white">로그인</h2>
       </div>

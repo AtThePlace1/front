@@ -93,11 +93,11 @@ export default function Signup() {
 
   return (
     <form
-      className="mt-10 w-full rounded-xl bg-[#353434]/70 p-8"
+      className="mt-10 w-[300px] rounded-xl bg-[#353434]/70 p-10"
       onSubmit={handleSubmit}
     >
       <fieldset className="flex flex-col gap-6 border-none">
-        <legend className="mb-8 w-full text-center text-lg font-bold text-white">
+        <legend className="mb-10 w-full text-center text-lg font-bold text-white">
           회원가입
         </legend>
 

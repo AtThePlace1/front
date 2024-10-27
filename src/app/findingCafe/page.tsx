@@ -78,7 +78,7 @@ export default function FindingCafe() {
   const allAnswered = Object.keys(answers).length === questions.length;
 
   return (
-    <div className="flex w-full flex-col items-center">
+    <div className="flexCenter w-[300px] flex-col">
       <ProgressBar
         currentStep={currentStep}
         handleStepClick={handleStepClick}
