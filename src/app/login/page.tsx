@@ -1,60 +1,54 @@
 'use client';
 
 import { useState } from 'react';
-import axios, { AxiosError } from 'axios';
-
-interface LoginForm {
-  email: string;
-  password: string;
-}
+import useAuthStore from '../store/authStore';
+import { loginUser } from '../utils/apiRequests';
+import { useMutation } from '@tanstack/react-query';
+import { LoginForm } from '../utils/apiRequests';
+import { AxiosError } from 'axios';
 
 export default function Login() {
-  const [loginData, setLoginData] = useState<LoginForm>({
-    email: '',
-    password: '',
-  });
-
+  const { loginData, setLoginData, clearLoginData } = useAuthStore();
   const [errors, setErrors] = useState<string>('');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLoginData({
-      ...loginData,
-      [e.target.id]: e.target.value,
-    });
-  };
+  // 로그인 mutation
+  const loginMutation = useMutation({
+    mutationFn: loginUser,
+    onSuccess: (data) => {
+      console.log('로그인 성공!', data);
+      alert('login success!');
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
+      // 토큰을 localStorage에 저장
+      localStorage.setItem('token', JSON.stringify(data.token));
 
-    try {
-      const response = await axios.post('http://localhost:10010/users/login', {
-        email: loginData.email,
-        pwd: loginData.password,
-      });
+      // 로그인 후 상태 초기화
+      clearLoginData();
 
-      console.log('로그인 성공 :', response.data);
-      alert('로그인 성공!');
-
-      localStorage.setItem('token', JSON.stringify(response.data.token));
-
+      // 메인 페이지로 이동
       window.location.href = '/';
-    } catch (error: unknown) {
-      if (error instanceof AxiosError) {
-        if (!error.response) {
-          console.error('요청 중 오류 :', error);
-          setErrors('요청 중 문제가 발생했습니다. 나중에 다시 시도해주세요.');
-          return;
-        }
-        const { status, data } = error.response;
-
+    },
+    onError: (error: AxiosError) => {
+      if (error.response) {
+        const { status } = error.response;
         if (status === 400) {
           setErrors('아이디 또는 비밀번호가 잘못되었습니다.');
-          return; // 인증 오류 처리 후 종료
+          return;
         }
-        // 기타 에러 처리
-        setErrors('로그인에 실패했습니다: ' + data.message);
       }
+      setErrors('로그인에 실패했습니다.');
+    },
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    if (id === 'email' || id === 'password') {
+      setLoginData(id as keyof LoginForm, value);
     }
+  };
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    loginMutation.mutate(loginData);
   };
 
   return (
@@ -102,7 +96,7 @@ export default function Login() {
             type="submit"
             className="w-full rounded-sm bg-[#FF6347] py-3 font-semibold text-white"
           >
-            로그인
+            {loginMutation.isPending ? '로그인 중...' : '로그인'}
           </button>
         </div>
 
