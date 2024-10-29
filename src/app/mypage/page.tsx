@@ -6,17 +6,18 @@ import { useRouter } from 'next/navigation';
 import CafeInfo from '@/app/_components/CafeInfo';
 import { useUserInfoStore } from '../store/store';
 import { UserLikeList } from '../store/store';
+import '../mock/user.json';
 
 export default function Mypage() {
   const { userInfo } = useUserInfoStore();
   const router = useRouter();
 
-  // useEffect(() => {
-  //   // userInfo가 없으면 로그인 페이지로 리다이렉트
-  //   if (userInfo === null) {
-  //     router.push('/login');
-  //   }
-  // }, []);
+  useEffect(() => {
+    // userInfo가 없으면 로그인 페이지로 리다이렉트
+    if (userInfo === null) {
+      router.push('/login');
+    }
+  }, []);
 
   return (
     <div className="mt-5 flex w-8/12 flex-col">

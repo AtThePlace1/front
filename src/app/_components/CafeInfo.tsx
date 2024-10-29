@@ -1,4 +1,7 @@
+'use client';
+
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { UserLikeList } from '../store/store';
 
 export default function CafeInfo({
@@ -8,8 +11,18 @@ export default function CafeInfo({
   cafe: UserLikeList;
   key: number;
 }) {
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push(`detail/${cafe.id}`);
+  };
+
   return (
-    <li key={key} className="mt-3 rounded-xl bg-gray-400/70">
+    <li
+      key={key}
+      className="mt-3 rounded-xl bg-gray-400/70"
+      onClick={handleClick}
+    >
       <div className="flexBetween p-2">
         <div className="flex flex-col gap-1 text-sm">
           <h3 className="font-bold">{cafe.name}</h3>
