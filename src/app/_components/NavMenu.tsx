@@ -1,13 +1,13 @@
 'use client';
 
-import axios from 'axios';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
-
 import classNames from 'classnames';
+import { useState } from 'react';
 import arrow from '/public/icons/menuArrow.svg';
+import { useQuery } from '@tanstack/react-query';
 import { useUserInfoStore } from '../store/store';
+import { fetchUserInfo } from '../utils/apiRequests';
 
 export default function Menu() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,32 +17,25 @@ export default function Menu() {
     setIsMenuOpen((prevState) => !prevState);
   };
 
-  useEffect(() => {
-    const fetchUserInfo = async () => {
+  const { data } = useQuery({
+    queryKey: ['userInfo'],
+    queryFn: async () => {
       try {
-        const token = JSON.parse(localStorage.getItem('token') || 'null');
-        if (token === null) return;
+        const token = localStorage.getItem('token');
+        if (!token) return null;
 
-        const response = await axios.get(
-          `http://localhost:10010/mypages/${token.user_pk}`,
-          {
-            headers: {
-              Authorization: token.accessToken,
-            },
-          }
-        );
-
-        setUserInfo(response.data);
-        console.log('유저 정보:', response.data);
-        console.log(userInfo);
-        setIsMenuOpen((prevState) => !prevState);
-      } catch (error: unknown) {
-        console.error('사용자 정보 불러오기 실패:', error);
+        const tokenData = JSON.parse(token);
+        const userData = await fetchUserInfo(tokenData.token);
+        setUserInfo(userData);
+        return userData;
+      } catch (error) {
+        console.error('토큰 파싱 오류: ', error);
+        throw error;
       }
-    };
-
-    fetchUserInfo();
-  }, []);
+    },
+    enabled: typeof window !== 'undefined' && !!localStorage.getItem('token'),
+    retry: false,
+  });
 
   // 로그아웃 함수
   const handleLogout = () => {
@@ -73,36 +66,38 @@ export default function Menu() {
           X
         </button>
         <ul className="mt-14 flex flex-col gap-7 p-6">
-          <li className="py-1">
-            {userInfo?.id ? (
-              <Link href={`/mypage/${userInfo.id}`} className="flexBetween">
-                <div>마이페이지</div>
-                <Image src={arrow} alt="" aria-hidden />
-              </Link>
-            ) : (
-              <Link href="/login" onClick={toggleMenu} className="flexBetween">
-                <div>로그인</div>
-                <Image src={arrow} alt="" aria-hidden />
-              </Link>
-            )}
+          {/* 마이페이지 / 로그인 */}
+          <li className="py-1" style={{ display: data ? 'block' : 'none' }}>
+            <Link href={'/mypage'} className="flexBetween" onClick={toggleMenu}>
+              <div>마이페이지</div>
+              <Image src={arrow} alt="" aria-hidden />
+            </Link>
           </li>
-          <li className="py-1">
-            {userInfo?.nickname ? (
-              <button
-                type="button"
-                onClick={handleLogout}
-                className="flexBetween"
-              >
-                <div>로그아웃</div>
-                <Image src={arrow} alt="" aria-hidden />
-              </button>
-            ) : (
-              <Link href="/signup" onClick={toggleMenu} className="flexBetween">
-                <div>회원가입</div>
-                <Image src={arrow} alt="" aria-hidden />
-              </Link>
-            )}
+          <li className="py-1" style={{ display: userInfo ? 'none' : 'block' }}>
+            <Link href="/login" onClick={toggleMenu} className="flexBetween">
+              <div>로그인</div>
+              <Image src={arrow} alt="" aria-hidden />
+            </Link>
           </li>
+
+          {/* 로그아웃 / 회원가입 */}
+          <li className="py-1" style={{ display: data ? 'block' : 'none' }}>
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="flexBetween"
+            >
+              <div>로그아웃</div>
+              <Image src={arrow} alt="" aria-hidden />
+            </button>
+          </li>
+          <li className="py-1" style={{ display: userInfo ? 'none' : 'block' }}>
+            <Link href="/signup" onClick={toggleMenu} className="flexBetween">
+              <div>회원가입</div>
+              <Image src={arrow} alt="" aria-hidden />
+            </Link>
+          </li>
+
           <li className="py-1">
             <Link
               href="/findingCafe"
