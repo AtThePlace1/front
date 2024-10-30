@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import CafeInfo from '../_components/CafeInfo';
 
 /** 진행바 */
 interface Progress {
@@ -40,7 +39,7 @@ export const useUserInfoStore = create<UserStore>((set) => ({
   clearUserInfo: () => set({ userInfo: null }),
 }));
 
-interface CafeInfo {
+export interface CafeInfoType {
   id: number;
   cafeName: string;
   openingHours: string;
@@ -52,11 +51,13 @@ interface CafeInfo {
 }
 
 interface CafeStore {
-  cafeInfo: CafeInfo | null;
-  setCafeInfo: (cafe: CafeInfo) => void;
+  cafeInfo: CafeInfoType | null;
+  setCafeInfo: (cafe: CafeInfoType) => void;
+  clearCafeInfo: () => void;
 }
 
 export const useCafeInfoStore = create<CafeStore>((set) => ({
   cafeInfo: null,
   setCafeInfo: (cafe) => set({ cafeInfo: cafe }),
+  clearCafeInfo: () => set({ cafeInfo: null }),
 }));
