@@ -31,7 +31,7 @@ export const fetchCafeDetail = async (
   cafeId: number
 ): Promise<CafeInfoType> => {
   try {
-    const response = await axios.get(`/cafe/detail/${cafeId}`);
+    const response = await api.get(`/cafe/detail/${cafeId}`);
     const cafeData = response.data.cafe[0];
 
     return {

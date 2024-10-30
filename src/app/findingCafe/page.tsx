@@ -14,7 +14,7 @@ const questions = [
   {
     id: 2,
     question: '단체석(5인 이상)이 가능한 카페를 찾으시나요?',
-    key: 'group_seat',
+    key: 'groupSeat',
   },
   {
     id: 3,
@@ -24,15 +24,15 @@ const questions = [
   {
     id: 4,
     question: '디카페인 커피가 있는 카페를 찾으시나요?',
-    key: 'decaffe',
+    key: 'decaf',
   },
 ];
 
 interface Answers {
   pet?: boolean;
-  group_seat?: boolean;
+  groupSeat?: boolean;
   terrace?: boolean;
-  decaffe?: boolean;
+  decaf?: boolean;
 }
 
 export default function FindingCafe() {
@@ -64,7 +64,7 @@ export default function FindingCafe() {
   const fetchFindingCafeData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:10010/prefers/?${queryParams}`
+        `http://localhost:10010/cafe/filter?${queryParams}`
       );
 
       console.log('결과 :', response.data);

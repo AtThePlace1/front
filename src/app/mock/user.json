@@ -1,25 +1,23 @@
 {
   "message": "User information retrieved successfully",
-  "userInfo": [
-    {
-      "profile_image": "zeze8",
-      "nickname": "email22",
-      "likeList": [
-        {
-          "cafe_id": 3,
-          "cafe_name": "포트레이트커피바",
-          "opening_hours": "11:00-22:00",
-          "contact_number": "0507-1358-4693",
-          "loacation_address": "서울 마포구 포은로8길 32 1층"
-        },
-        {
-          "cafe_id": 6,
-          "cafe_name": "오래커피",
-          "opening_hours": "11:00-19:00",
-          "contact_number": "0507-1491-0696",
-          "loacation_address": "서울 마포구 월드컵로17길 7 3층"
-        }
-      ]
-    }
-  ]
+  "userInfo": {
+    "profile_image": "zeze8",
+    "nickname": "email22",
+    "likeList": [
+      {
+        "cafe_id": 3,
+        "cafe_name": "포트레이트커피바",
+        "opening_hours": "11:00-22:00",
+        "contact_number": "0507-1358-4693",
+        "loacation_address": "서울 마포구 포은로8길 32 1층"
+      },
+      {
+        "cafe_id": 6,
+        "cafe_name": "오래커피",
+        "opening_hours": "11:00-19:00",
+        "contact_number": "0507-1491-0696",
+        "loacation_address": "서울 마포구 월드컵로17길 7 3층"
+      }
+    ]
+  }
 }

@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
 /** 진행바 */
 interface Progress {
@@ -14,10 +15,10 @@ export const useProgressBarStore = create<Progress>((set) => ({
 /** 유저 정보 */
 export interface UserLikeList {
   cafe_id: number;
-  name: string;
-  opening: string;
-  number: string;
-  address: string;
+  cafe_name: string;
+  opening_hours: string;
+  contact_number: string;
+  location_address: string;
 }
 
 interface UserInfo {
@@ -32,11 +33,19 @@ interface UserStore {
   clearUserInfo: () => void;
 }
 
-export const useUserInfoStore = create<UserStore>((set) => ({
-  userInfo: null,
-  setUserInfo: (user) => set({ userInfo: user }),
-  clearUserInfo: () => set({ userInfo: null }),
-}));
+export const useUserInfoStore = create<UserStore>()(
+  persist(
+    (set) => ({
+      userInfo: null,
+      setUserInfo: (user) => set({ userInfo: user }),
+      clearUserInfo: () => set({ userInfo: null }),
+    }),
+    {
+      name: 'user-info-storage', // 로컬 스토리지에 저장될 키 이름
+      storage: createJSONStorage(() => sessionStorage), // 기본은 localStorage, 필요에 따라 sessionStorage로 변경 가능
+    }
+  )
+);
 
 export interface CafeInfoType {
   id: number;

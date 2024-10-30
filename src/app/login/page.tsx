@@ -6,29 +6,30 @@ import { fetchUserInfo, loginUser } from '../api/apiRequests';
 import { useMutation } from '@tanstack/react-query';
 import { LoginForm } from '../api/apiRequests';
 import { AxiosError } from 'axios';
+import { useUserInfoStore } from '../store/store';
 
 export default function Login() {
   const { loginData, setLoginData, clearLoginData } = useAuthStore();
   const [errors, setErrors] = useState<string>('');
+  const { setUserInfo } = useUserInfoStore();
 
   // 로그인 mutation
   const loginMutation = useMutation({
     mutationFn: loginUser,
     onSuccess: async (data) => {
-      const userInfo = await fetchUserInfo();
-      console.log(userInfo);
+      // 토큰을 localStorage에 저장
+      localStorage.setItem('token', data.token.token);
+
+      const response = await fetchUserInfo();
+      console.log(response.userInfo);
+      setUserInfo(response.userInfo);
 
       alert('login success!');
-
-      // 토큰을 localStorage에 저장
-      localStorage.setItem('token', JSON.stringify(data.token));
-      // 유저 정보 불러오는 로직
-
-      // 로그인 후 상태 초기화
-      clearLoginData();
-
-      // 메인 페이지로 이동
       // window.location.href = '/';
+
+      return () => {
+        clearLoginData();
+      };
     },
     onError: (error: AxiosError) => {
       if (error.response) {
