@@ -1,6 +1,23 @@
-import axios from 'axios';
 import api from './api';
 import { CafeInfoType } from '../store/store';
+
+export interface SignupForm {
+  email: string;
+  password: string;
+  nickname: string;
+  profileImage: string;
+}
+
+// 회원가입 요청 함수
+export const signupUser = async (formData: SignupForm) => {
+  const response = await api.post('/member/join', {
+    email: formData.email,
+    password: formData.password,
+    nickname: formData.nickname,
+    profile_image: formData.profileImage,
+  });
+  return response.data;
+};
 
 export interface LoginForm {
   email: string;
