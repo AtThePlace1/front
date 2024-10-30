@@ -3,7 +3,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import Menu from './_components/NavMenu';
 import RandomBackground from './_components/RandomBackground';
-import ReactQueryProviders from './_components/ReactQueryProviders';
+import UseReactQuery from './hook/UseReactQuey';
 
 export const metadata: Metadata = {
   title: 'At The Place',
@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="relative flex h-dvh flex-col">
-        <ReactQueryProviders>
+        <UseReactQuery>
           <RandomBackground />
           <header className="flexCenter relative z-10 w-full bg-[url('/images/blackBg.webp')] bg-cover bg-center bg-no-repeat px-10 py-5">
             <h1 className="self-center font-serif text-xl leading-5 text-slate-200 underline underline-offset-2">
@@ -28,7 +28,7 @@ export default function RootLayout({
             <Menu />
           </header>
           <main className="flex h-full flex-col items-center">{children}</main>
-        </ReactQueryProviders>
+        </UseReactQuery>
       </body>
     </html>
   );

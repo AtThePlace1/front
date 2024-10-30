@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation'; // useParams 추가
-import { fetchCafeDetail } from '@/app/utils/apiRequests';
+import { fetchCafeDetail } from '@/app/api/apiRequests';
 import { useCafeInfoStore } from '@/app/store/store';
 import Image from 'next/image';
 import Link from 'next/link';

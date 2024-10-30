@@ -22,12 +22,8 @@ export const loginUser = async (
   return response.data;
 };
 
-export const fetchUserInfo = async ({ token }: { token: string }) => {
-  const response = await api.get('/mypage', {
-    headers: {
-      Authorization: token,
-    },
-  });
+export const fetchUserInfo = async () => {
+  const response = await api.get('/mypage');
   return response.data;
 };
 

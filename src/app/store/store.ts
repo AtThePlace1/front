@@ -13,7 +13,7 @@ export const useProgressBarStore = create<Progress>((set) => ({
 
 /** 유저 정보 */
 export interface UserLikeList {
-  id: number;
+  cafe_id: number;
   name: string;
   opening: string;
   number: string;
@@ -21,9 +21,8 @@ export interface UserLikeList {
 }
 
 interface UserInfo {
-  id: number;
   nickname: string;
-  profileImage: string;
+  profile_image: string;
   likeList: UserLikeList[];
 }
 

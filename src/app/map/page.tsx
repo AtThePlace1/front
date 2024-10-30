@@ -1,8 +1,9 @@
 'use client';
 
+import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 import cafeList from '../mock/cafe.json';
-import CafeCard from '../_components/cafeCard';
+import CafeCard from '../_components/CafeCard';
 
 export default function Map() {
   const mapRef = useRef<null | naver.maps.Map>(null);
@@ -70,13 +71,17 @@ export default function Map() {
       <div id="map" className="h-full w-full"></div>
       <button
         onClick={handleCurrentLocationClick}
-        className="absolute left-5 top-5 rounded bg-blue-500 p-2 text-white"
+        className="absolute left-5 top-5 rounded border-gray-300 bg-gray-300 p-2"
       >
-        내 위치
+        <Image
+          src={'/icons/myLocation.svg'}
+          alt="내 위치 찾기"
+          width={25}
+          height={25}
+        />
       </button>
-      <div className="absolute bottom-0 right-4 bg-slate-400">
-        {' '}
-        <button>내 위치</button>
+      <div className="absolute bottom-20 w-full bg-white">
+        <CafeCard />
       </div>
     </div>
   );

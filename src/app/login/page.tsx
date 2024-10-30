@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 import useAuthStore from '../store/authStore';
-import { loginUser } from '../utils/apiRequests';
+import { fetchUserInfo, loginUser } from '../api/apiRequests';
 import { useMutation } from '@tanstack/react-query';
-import { LoginForm } from '../utils/apiRequests';
+import { LoginForm } from '../api/apiRequests';
 import { AxiosError } from 'axios';
 
 export default function Login() {
@@ -14,18 +14,21 @@ export default function Login() {
   // 로그인 mutation
   const loginMutation = useMutation({
     mutationFn: loginUser,
-    onSuccess: (data) => {
-      console.log('로그인 성공!', data);
+    onSuccess: async (data) => {
+      const userInfo = await fetchUserInfo();
+      console.log(userInfo);
+
       alert('login success!');
 
       // 토큰을 localStorage에 저장
       localStorage.setItem('token', JSON.stringify(data.token));
+      // 유저 정보 불러오는 로직
 
       // 로그인 후 상태 초기화
       clearLoginData();
 
       // 메인 페이지로 이동
-      window.location.href = '/';
+      // window.location.href = '/';
     },
     onError: (error: AxiosError) => {
       if (error.response) {

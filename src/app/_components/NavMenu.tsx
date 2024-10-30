@@ -7,7 +7,7 @@ import { useState } from 'react';
 import arrow from '/public/icons/menuArrow.svg';
 import { useQuery } from '@tanstack/react-query';
 import { useUserInfoStore } from '../store/store';
-import { fetchUserInfo } from '../utils/apiRequests';
+import { fetchUserInfo } from '../api/apiRequests';
 
 export default function Menu() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,26 +16,6 @@ export default function Menu() {
   const toggleMenu = () => {
     setIsMenuOpen((prevState) => !prevState);
   };
-
-  const { data } = useQuery({
-    queryKey: ['userInfo'],
-    queryFn: async () => {
-      try {
-        const token = localStorage.getItem('token');
-        if (!token) return null;
-
-        const tokenData = JSON.parse(token);
-        const userData = await fetchUserInfo(tokenData.token);
-        setUserInfo(userData);
-        return userData;
-      } catch (error) {
-        console.error('토큰 파싱 오류: ', error);
-        throw error;
-      }
-    },
-    enabled: typeof window !== 'undefined' && !!localStorage.getItem('token'),
-    retry: false,
-  });
 
   // 로그아웃 함수
   const handleLogout = () => {
@@ -67,7 +47,7 @@ export default function Menu() {
         </button>
         <ul className="mt-14 flex flex-col gap-7 p-6">
           {/* 마이페이지 / 로그인 */}
-          <li className="py-1" style={{ display: data ? 'block' : 'none' }}>
+          <li className="py-1">
             <Link href={'/mypage'} className="flexBetween" onClick={toggleMenu}>
               <div>마이페이지</div>
               <Image src={arrow} alt="" aria-hidden />
@@ -81,7 +61,7 @@ export default function Menu() {
           </li>
 
           {/* 로그아웃 / 회원가입 */}
-          <li className="py-1" style={{ display: data ? 'block' : 'none' }}>
+          <li className="py-1">
             <button
               type="button"
               onClick={handleLogout}

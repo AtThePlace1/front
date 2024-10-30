@@ -1,7 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import api from '../utils/api';
+import api from '../api/api';
 import { useCafeInfoStore, CafeInfoType } from '../store/store';
 
 
