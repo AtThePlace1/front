@@ -5,13 +5,11 @@ import Image from 'next/image';
 import classNames from 'classnames';
 import { useState } from 'react';
 import arrow from '/public/icons/menuArrow.svg';
-import { useQuery } from '@tanstack/react-query';
 import { useUserInfoStore } from '../store/store';
-import { fetchUserInfo } from '../api/apiRequests';
 
 export default function Menu() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { userInfo, setUserInfo, clearUserInfo } = useUserInfoStore();
+  const { userInfo, clearUserInfo } = useUserInfoStore();
 
   const toggleMenu = () => {
     setIsMenuOpen((prevState) => !prevState);
