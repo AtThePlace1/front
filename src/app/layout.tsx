@@ -3,7 +3,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import Menu from './_components/NavMenu';
 import RandomBackground from './_components/RandomBackground';
-import UseReactQuery from './hook/UseReactQuey';
+import UseReactQuery from './hooks/UseReactQuey';
 
 export const metadata: Metadata = {
   title: 'At The Place',

@@ -1,47 +1,15 @@
 'use client';
 
+import Link from 'next/link';
 import { useState } from 'react';
+import { LoginForm } from '../api/authApi';
 import useAuthStore from '../store/authStore';
-import { fetchUserInfo, loginUser } from '../api/apiRequests';
-import { useMutation } from '@tanstack/react-query';
-import { LoginForm } from '../api/apiRequests';
-import { AxiosError } from 'axios';
-import { useUserInfoStore } from '../store/store';
+import { useLoginMutation } from '../hooks/useAuthQuery';
 
 export default function Login() {
-  const { loginData, setLoginData, clearLoginData } = useAuthStore();
-  const [errors, setErrors] = useState<string>('');
-  const { setUserInfo } = useUserInfoStore();
-
-  // 로그인 mutation
-  const loginMutation = useMutation({
-    mutationFn: loginUser,
-    onSuccess: async (data) => {
-      // 토큰을 localStorage에 저장
-      localStorage.setItem('token', data.token.token);
-
-      const response = await fetchUserInfo();
-      console.log(response.userInfo);
-      setUserInfo(response.userInfo);
-
-      alert('login success!');
-      // window.location.href = '/';
-
-      return () => {
-        clearLoginData();
-      };
-    },
-    onError: (error: AxiosError) => {
-      if (error.response) {
-        const { status } = error.response;
-        if (status === 400) {
-          setErrors('아이디 또는 비밀번호가 잘못되었습니다.');
-          return;
-        }
-      }
-      setErrors('로그인에 실패했습니다.');
-    },
-  });
+  const loginMutation = useLoginMutation();
+  const { loginData, setLoginData } = useAuthStore();
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -52,7 +20,11 @@ export default function Login() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    loginMutation.mutate(loginData);
+    loginMutation.mutate(loginData, {
+      onError: () => {
+        setErrorMessage('아이디 또는 비밀번호가 잘못되었습니다.');
+      },
+    });
   };
 
   return (
@@ -72,7 +44,7 @@ export default function Login() {
             value={loginData.email}
             onChange={handleChange}
             className="inputCommon w-full"
-            placeholder="이메일 아이디"
+            placeholder="아이디(이메일) 입력"
             required
           />
         </div>
@@ -93,7 +65,9 @@ export default function Login() {
         </div>
 
         {/* 에러 메시지 출력 */}
-        {errors && <p className="mb-4 text-red-500">{errors}</p>}
+        {errorMessage && (
+          <p className="mb-4 text-sm text-red-500">{errorMessage}</p>
+        )}
 
         <div className="mb-4 mt-6">
           <button
@@ -105,12 +79,12 @@ export default function Login() {
         </div>
 
         <div className="text-center">
-          <a
+          <Link
             href="/signup"
             className="text-sm text-gray-200 underline underline-offset-2"
           >
             회원가입
-          </a>
+          </Link>
         </div>
       </form>
     </div>
