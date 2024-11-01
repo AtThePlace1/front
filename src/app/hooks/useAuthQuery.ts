@@ -1,13 +1,27 @@
-import useAuthStore from '../store/authStore';
-import { useUserInfoStore } from '../store/store';
+import { AxiosError } from 'axios';
+import { useAuthStore } from '../store/authStore';
+import { useUserInfoStore } from '../store/authStore';
 import { useMutation } from '@tanstack/react-query';
 import {
-  loginUser,
-  fetchUserInfo,
-  LoginResponse,
   LoginForm,
+  loginUser,
+  signupUser,
+  LoginResponse,
+  fetchUserInfo,
 } from '../api/authApi';
-import { AxiosError } from 'axios';
+
+export const useSignupMutation = () => {
+  return useMutation({
+    mutationFn: signupUser,
+    onSuccess: (data) => {
+      alert('회원가입이 완료되었습니다.');
+      console.log('회원가입 성공:', data);
+    },
+    onError: (error: AxiosError) => {
+      console.error('회원가입에 실패했습니다.', error);
+    },
+  });
+};
 
 export const useLoginMutation = () => {
   const { setUserInfo } = useUserInfoStore();
