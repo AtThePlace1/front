@@ -10,6 +10,7 @@ import { useUserInfoStore } from '../store/store';
 export default function Menu() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { userInfo, clearUserInfo } = useUserInfoStore();
+  const isLoggin = !!userInfo;
 
   const toggleMenu = () => {
     setIsMenuOpen((prevState) => !prevState);
@@ -44,37 +45,55 @@ export default function Menu() {
           X
         </button>
         <ul className="mt-14 flex flex-col gap-7 p-6">
-          {/* 마이페이지 / 로그인 */}
-          <li className="py-1">
-            <Link href={'/mypage'} className="flexBetween" onClick={toggleMenu}>
-              <div>마이페이지</div>
-              <Image src={arrow} alt="" aria-hidden />
-            </Link>
-          </li>
-          <li className="py-1" style={{ display: userInfo ? 'none' : 'block' }}>
-            <Link href="/login" onClick={toggleMenu} className="flexBetween">
-              <div>로그인</div>
-              <Image src={arrow} alt="" aria-hidden />
-            </Link>
-          </li>
-
-          {/* 로그아웃 / 회원가입 */}
-          <li className="py-1">
-            <button
-              type="button"
-              onClick={handleLogout}
-              className="flexBetween"
-            >
-              <div>로그아웃</div>
-              <Image src={arrow} alt="" aria-hidden />
-            </button>
-          </li>
-          <li className="py-1" style={{ display: userInfo ? 'none' : 'block' }}>
-            <Link href="/signup" onClick={toggleMenu} className="flexBetween">
-              <div>회원가입</div>
-              <Image src={arrow} alt="" aria-hidden />
-            </Link>
-          </li>
+          {isLoggin ? (
+            // 로그인 상태
+            <>
+              <li className="py-1">
+                <Link
+                  href={'/mypage'}
+                  className="flexBetween"
+                  onClick={toggleMenu}
+                >
+                  <div>마이페이지</div>
+                  <Image src={arrow} alt="" aria-hidden />
+                </Link>
+              </li>
+              <li className="py-1">
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="flexBetween"
+                >
+                  <div>로그아웃</div>
+                  <Image src={arrow} alt="" aria-hidden />
+                </button>
+              </li>
+            </>
+          ) : (
+            // 비로그인 상태
+            <>
+              <li className="py-1">
+                <Link
+                  href="/login"
+                  onClick={toggleMenu}
+                  className="flexBetween"
+                >
+                  <div>로그인</div>
+                  <Image src={arrow} alt="" aria-hidden />
+                </Link>
+              </li>
+              <li className="py-1">
+                <Link
+                  href="/signup"
+                  onClick={toggleMenu}
+                  className="flexBetween"
+                >
+                  <div>회원가입</div>
+                  <Image src={arrow} alt="" aria-hidden />
+                </Link>
+              </li>
+            </>
+          )}
 
           <li className="py-1">
             <Link
