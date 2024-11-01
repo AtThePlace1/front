@@ -1,29 +1,19 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import CafeInfo from '@/app/_components/CafeInfo';
 import { useUserInfoStore } from '../store/authStore';
 import { UserLikeList } from '../store/authStore';
 export default function Mypage() {
   const { userInfo } = useUserInfoStore();
-  const router = useRouter();
   console.log(userInfo);
-
-  useEffect(() => {
-    // userInfo가 없으면 로그인 페이지로 리다이렉트
-    if (userInfo === null) {
-      router.push('/login');
-    }
-  }, []);
 
   return (
     <div className="mt-5 flex w-8/12 flex-col">
       {/* 프로필 이미지 및 유저 이름 */}
       <div className="flex flex-col items-center gap-3">
         <Image
-          src={userInfo.profile_image}
+          src={userInfo.profileImage}
           alt="프로필 이미지"
           width={100}
           height={100}
@@ -45,7 +35,7 @@ export default function Mypage() {
         <ul>
           {userInfo?.likeList && userInfo?.likeList.length > 0 ? (
             userInfo?.likeList.map((cafe: UserLikeList) => (
-              <CafeInfo cafe={cafe} key={cafe.cafe_id} />
+              <CafeInfo cafe={cafe} />
             ))
           ) : (
             <p className="mt-3">찜한 카페가 없습니다.</p>
