@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 import ProgressBar from '../_components/ProgressBar';
-import { useProgressBarStore } from '../store/store';
+import { useProgressBarStore } from '../store/cafeStore';
 import { useState } from 'react';
 
 const questions = [

@@ -5,7 +5,7 @@ import Image from 'next/image';
 import classNames from 'classnames';
 import { useState } from 'react';
 import arrow from '/public/icons/menuArrow.svg';
-import { useUserInfoStore } from '../store/store';
+import { useUserInfoStore } from '../store/authStore';
 
 export default function Menu() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

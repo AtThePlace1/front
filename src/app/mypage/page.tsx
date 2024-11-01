@@ -4,10 +4,8 @@ import Image from 'next/image';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import CafeInfo from '@/app/_components/CafeInfo';
-import { useUserInfoStore } from '../store/store';
-import { UserLikeList } from '../store/store';
-import '../mock/user.json';
-
+import { useUserInfoStore } from '../store/authStore';
+import { UserLikeList } from '../store/authStore';
 export default function Mypage() {
   const { userInfo } = useUserInfoStore();
   const router = useRouter();

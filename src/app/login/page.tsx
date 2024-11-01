@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { LoginForm } from '../api/authApi';
-import useAuthStore from '../store/authStore';
+import { useAuthStore } from '../store/authStore';
 import { useLoginMutation } from '../hooks/useAuthQuery';
 
 export default function Login() {

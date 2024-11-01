@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { UserLikeList } from '../store/store';
+import { UserLikeList } from '../store/cafeStore';
 
 export default function CafeInfo({
   cafe,
