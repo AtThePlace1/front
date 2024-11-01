@@ -37,12 +37,12 @@ export interface UserLikeList {
 }
 interface UserInfo {
   nickname: string;
-  profile_image: string;
+  profileImage: string;
   likeList: UserLikeList[];
 }
 
 interface UserStore {
-  userInfo: UserInfo | null;
+  userInfo: UserInfo;
   setUserInfo: (user: UserInfo) => void;
   clearUserInfo: () => void;
 }
@@ -50,13 +50,14 @@ interface UserStore {
 export const useUserInfoStore = create<UserStore>()(
   persist(
     (set) => ({
-      userInfo: null,
+      userInfo: { nickname: '', profileImage: '', likeList: [] },
       setUserInfo: (user) => set({ userInfo: user }),
-      clearUserInfo: () => set({ userInfo: null }),
+      clearUserInfo: () =>
+        set({ userInfo: { nickname: '', profileImage: '', likeList: [] } }),
     }),
     {
-      name: 'user-info-storage', // 로컬 스토리지에 저장될 키 이름
-      storage: createJSONStorage(() => sessionStorage), // 기본은 localStorage, 필요에 따라 sessionStorage로 변경 가능
+      name: 'user-info-storage',
+      storage: createJSONStorage(() => sessionStorage),
     }
   )
 );

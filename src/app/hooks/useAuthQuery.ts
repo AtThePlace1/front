@@ -31,7 +31,7 @@ export const useLoginMutation = () => {
     mutationFn: loginUser,
     onSuccess: async (data) => {
       // 토큰을 localStorage에 저장
-      localStorage.setItem('token', data.token.token);
+      localStorage.setItem('token', data.token);
 
       // 사용자 정보 가져오기
       const response = await fetchUserInfo();

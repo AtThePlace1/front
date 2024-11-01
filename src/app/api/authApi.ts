@@ -14,7 +14,7 @@ export const signupUser = async (formData: SignupForm) => {
     email: formData.email,
     password: formData.password,
     nickname: formData.nickname,
-    profile_image: formData.profileImage,
+    profileImage: formData.profileImage,
   });
   return response.data;
 };

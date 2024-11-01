@@ -10,7 +10,7 @@ import { useUserInfoStore } from '../store/authStore';
 export default function Menu() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { userInfo, clearUserInfo } = useUserInfoStore();
-  const isLoggin = !!userInfo;
+  const isLoggin = !!userInfo.nickname;
 
   const toggleMenu = () => {
     setIsMenuOpen((prevState) => !prevState);
@@ -26,7 +26,7 @@ export default function Menu() {
 
   // 메뉴가 열리고 닫히는 설정
   const menuClasses = classNames(
-    "fixed top-0 right-0 w-10/12 h-full z-40 transform transition-transform duration-300 bg-[url('/images/blackBg.webp')] bg-cover bg-center",
+    'fixed top-0 right-0 w-10/12 h-full z-40 transform transition-transform duration-300 bg-black',
     {
       'translate-x-0': isMenuOpen,
       'translate-x-full': !isMenuOpen,
