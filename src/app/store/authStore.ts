@@ -45,18 +45,35 @@ interface UserStore {
   userInfo: UserInfo;
   setUserInfo: (user: UserInfo) => void;
   clearUserInfo: () => void;
+  addLikeList: (cafe: UserLikeList) => void;
+  removeLikeList: (cafeId: number) => void;
 }
-
 export const useUserInfoStore = create<UserStore>()(
   persist(
     (set) => ({
       userInfo: { nickname: '', profile_image: '', likeList: [] },
       setUserInfo: (user) => set({ userInfo: user }),
+      addLikeList: (cafe) =>
+        set((state) => ({
+          userInfo: {
+            ...state.userInfo,
+            likeList: [...state.userInfo.likeList, cafe],
+          },
+        })),
+      removeLikeList: (cafeId) =>
+        set((state) => ({
+          userInfo: {
+            ...state.userInfo,
+            likeList: state.userInfo.likeList.filter(
+              (cafe) => cafe.cafe_id !== cafeId
+            ),
+          },
+        })),
       clearUserInfo: () =>
         set({ userInfo: { nickname: '', profile_image: '', likeList: [] } }),
     }),
     {
-      name: 'user-info-storage',
+      name: 'userInfo',
       storage: createJSONStorage(() => sessionStorage),
     }
   )
