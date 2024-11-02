@@ -37,7 +37,7 @@ export interface UserLikeList {
 }
 interface UserInfo {
   nickname: string;
-  profileImage: string;
+  profile_image: string;
   likeList: UserLikeList[];
 }
 
@@ -50,10 +50,10 @@ interface UserStore {
 export const useUserInfoStore = create<UserStore>()(
   persist(
     (set) => ({
-      userInfo: { nickname: '', profileImage: '', likeList: [] },
+      userInfo: { nickname: '', profile_image: '', likeList: [] },
       setUserInfo: (user) => set({ userInfo: user }),
       clearUserInfo: () =>
-        set({ userInfo: { nickname: '', profileImage: '', likeList: [] } }),
+        set({ userInfo: { nickname: '', profile_image: '', likeList: [] } }),
     }),
     {
       name: 'user-info-storage',

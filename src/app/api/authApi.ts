@@ -5,7 +5,7 @@ export interface SignupForm {
   email: string;
   password: string;
   nickname: string;
-  profileImage: string;
+  profile_image: string;
 }
 
 // 회원가입 요청
@@ -14,7 +14,7 @@ export const signupUser = async (formData: SignupForm) => {
     email: formData.email,
     password: formData.password,
     nickname: formData.nickname,
-    profileImage: formData.profileImage,
+    profile_image: formData.profile_image,
   });
   return response.data;
 };

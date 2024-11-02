@@ -13,7 +13,7 @@ export default function Mypage() {
       {/* 프로필 이미지 및 유저 이름 */}
       <div className="flex flex-col items-center gap-3">
         <Image
-          src={userInfo.profileImage}
+          src={userInfo.profile_image}
           alt="프로필 이미지"
           width={100}
           height={100}
@@ -34,8 +34,8 @@ export default function Mypage() {
 
         <ul>
           {userInfo?.likeList && userInfo?.likeList.length > 0 ? (
-            userInfo?.likeList.map((cafe: UserLikeList) => (
-              <CafeInfo cafe={cafe} />
+            userInfo?.likeList.map((cafe: UserLikeList, index: number) => (
+              <CafeInfo cafe={cafe} key={index} />
             ))
           ) : (
             <p className="mt-3">찜한 카페가 없습니다.</p>

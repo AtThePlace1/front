@@ -15,7 +15,7 @@ interface SignupFormData {
   password: string;
   confirmPassword: string;
   nickname: string;
-  profileImage: string;
+  profile_image: string;
 }
 
 export default function Signup() {
@@ -24,7 +24,7 @@ export default function Signup() {
     password: '',
     confirmPassword: '',
     nickname: '',
-    profileImage: '/images/coffee-bean.png',
+    profile_image: '/images/coffee-bean.png',
   });
 
   const [errors, setErrors] = useState<SignupError>({

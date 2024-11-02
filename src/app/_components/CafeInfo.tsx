@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { UserLikeList } from '../store/cafeStore';
+import { UserLikeList } from '../store/authStore';
 
 export default function CafeInfo({
   cafe,
@@ -12,7 +12,7 @@ export default function CafeInfo({
   key: number;
 }) {
   const router = useRouter();
-  console.log(cafe);
+
   const handleClick = () => {
     router.push(`detail/${cafe.cafe_id}`);
   };

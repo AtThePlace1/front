@@ -26,7 +26,7 @@ export default function Menu() {
 
   // 메뉴가 열리고 닫히는 설정
   const menuClasses = classNames(
-    'fixed top-0 right-0 w-10/12 h-full z-40 transform transition-transform duration-300 bg-black',
+    "fixed top-0 right-0 w-10/12 h-full z-40 transform transition-transform duration-300 bg-[url('/images/blackBg.webp')] bg-cover bg-center",
     {
       'translate-x-0': isMenuOpen,
       'translate-x-full': !isMenuOpen,
@@ -46,7 +46,7 @@ export default function Menu() {
         </button>
         <ul className="mt-14 flex flex-col gap-7 p-6">
           {isLoggin ? (
-            // 로그인 상태
+            // 로그인 상태일 때
             <>
               <li className="py-1">
                 <Link
@@ -70,7 +70,7 @@ export default function Menu() {
               </li>
             </>
           ) : (
-            // 비로그인 상태
+            // 비로그인 상태일 때
             <>
               <li className="py-1">
                 <Link
