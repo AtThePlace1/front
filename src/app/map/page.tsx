@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
-import cafeList from '../mock/cafe.json';
+
 import CafeCard from '../_components/CafeCard';
 
 export default function Map() {
@@ -16,14 +16,6 @@ export default function Map() {
       };
 
       const map = new naver.maps.Map('map', mapOptions);
-
-      cafeList.cafeList.forEach((cafe) => {
-        new naver.maps.Marker({
-          position: new naver.maps.LatLng(cafe.위도, cafe.경도),
-          map: map,
-          title: cafe.name,
-        });
-      });
 
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
@@ -80,7 +72,7 @@ export default function Map() {
           height={25}
         />
       </button>
-      <div className="absolute bottom-20 w-full bg-white">
+      <div className="absolute bottom-20 w-full">
         <CafeCard />
       </div>
     </div>

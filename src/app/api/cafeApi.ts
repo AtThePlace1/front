@@ -24,3 +24,9 @@ export const fetchCafeDetail = async (
     throw error;
   }
 };
+
+// 카페 필터링
+export const fetchFilteringCafeData = async (queryParams: string) => {
+  const response = await api.get(`/cafe/filter?${queryParams}`);
+  return response.data;
+};

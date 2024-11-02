@@ -8,7 +8,7 @@ interface Progress {
 
 export const useProgressBarStore = create<Progress>((set) => ({
   currentStep: 1,
-  setCurrentStep: (step) => set({ currentStep: step }),
+  setCurrentStep: (step) => set(() => ({ currentStep: step })),
 }));
 
 export interface CafeInfoType {

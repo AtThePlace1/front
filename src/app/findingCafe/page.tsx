@@ -1,9 +1,9 @@
 'use client';
 
-import axios from 'axios';
+import { useState } from 'react';
 import ProgressBar from '../_components/ProgressBar';
 import { useProgressBarStore } from '../store/cafeStore';
-import { useState } from 'react';
+import { useCafeFilterQuery } from '../hooks/useCafeQuery';
 
 const questions = [
   {
@@ -38,8 +38,8 @@ interface Answers {
 export default function FindingCafe() {
   const currentStep = useProgressBarStore((state) => state.currentStep);
   const setCurrentStep = useProgressBarStore((state) => state.setCurrentStep);
-
   const [answers, setAnswers] = useState<Answers>({});
+  const cafeFilterMutation = useCafeFilterQuery();
 
   const handleAnswer = (key: string, value: boolean) => {
     setAnswers((prev) => ({ ...prev, [key]: value }));
@@ -56,23 +56,22 @@ export default function FindingCafe() {
     }
   };
 
-  const queryParams = Object.keys(answers)
-    .filter((key) => answers[key as keyof Answers])
-    .map((key) => `${key}=1`)
-    .join('&');
+  const handleSubmit = () => {
+    const queryParams = Object.keys(answers)
+      .filter((key) => answers[key as keyof Answers])
+      .map((key) => `${key}=1`)
+      .join('&');
 
-  const fetchFindingCafeData = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:10010/cafe/filter?${queryParams}`
-      );
-
-      console.log('결과 :', response.data);
-      setAnswers({});
-      setCurrentStep(1);
-    } catch (error) {
-      console.error('에러 발생', error);
-    }
+    cafeFilterMutation.mutate(queryParams, {
+      onSuccess: (data) => {
+        console.log('결과: ', data);
+        setAnswers({});
+        setCurrentStep(1);
+      },
+      onError: (error) => {
+        console.error('에러 발생', error);
+      },
+    });
   };
 
   const allAnswered = Object.keys(answers).length === questions.length;
@@ -119,7 +118,7 @@ export default function FindingCafe() {
       )}
       {allAnswered && (
         <button
-          onClick={fetchFindingCafeData}
+          onClick={handleSubmit}
           className="mt-10 w-full rounded bg-orange-600 p-4 text-white"
         >
           결과 확인
