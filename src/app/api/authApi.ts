@@ -44,5 +44,5 @@ export const loginUser = async (
 // 로그인한 유저 정보 요청
 export const fetchUserInfo = async () => {
   const response = await api.get('/mypage');
-  return response.data;
+  return response.data || { nickname: '', profile_image: '', likeList: [] };
 };
