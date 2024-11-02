@@ -1,16 +1,25 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useRouter, useParams } from 'next/navigation'; // useParams 추가
-import { fetchCafeDetail } from '@/app/api/apiRequests';
-import { useCafeInfoStore } from '@/app/store/store';
-import Image from 'next/image';
 import Link from 'next/link';
+import Image from 'next/image';
+import { useEffect } from 'react';
+import { fetchCafeDetail } from '@/app/api/cafeApi';
+import { useRouter, useParams } from 'next/navigation';
+import { useCafeInfoStore } from '@/app/store/cafeStore';
+import { useUserInfoStore } from '@/app/store/authStore';
+import { useUserInfoQuery } from '@/app/hooks/useAuthQuery';
+import { useLikeToggleMutation } from '@/app/hooks/userLikeListQuery';
 
 export default function Detail() {
   const router = useRouter();
   const params = useParams(); // useParams를 사용하여 URL 파라미터를 가져옴
+  const { refetch } = useUserInfoQuery(); // 유저 정보를 최신 상태로 가져오는 쿼리
+  const { userInfo } = useUserInfoStore();
+  const toggleLikeMutation = useLikeToggleMutation();
   const { cafeInfo, setCafeInfo, clearCafeInfo } = useCafeInfoStore();
+  const isLiked = userInfo.likeList.some(
+    (cafe) => cafe.cafe_id === cafeInfo?.id
+  );
 
   useEffect(() => {
     const loadCafeDetail = async () => {
@@ -33,6 +42,18 @@ export default function Detail() {
     };
   }, [params.cafeId, setCafeInfo, clearCafeInfo]);
 
+  // 좋아요 등록/취소
+  const handleLikeToggle = () => {
+    if (!cafeInfo) return;
+
+    toggleLikeMutation.mutate(cafeInfo.id, {
+      onSuccess: () => {
+        refetch(); // 좋아요/취소 후 유조 종보 재요청
+      },
+    });
+  };
+
+  // 카페 정보 불러오기
   if (!cafeInfo) {
     return <div>Loading...</div>;
   }
@@ -51,9 +72,11 @@ export default function Detail() {
 
         <h1 className="text-lg font-bold">{cafeInfo.cafeName}</h1>
 
-        <button type="button">
+        <button type="button" onClick={handleLikeToggle}>
           <Image
-            src={'/icons/heartIcon.svg'}
+            src={
+              isLiked ? '/icons/heart_filled.svg' : '/icons/heart_outline.svg'
+            }
             width={25}
             height={25}
             alt="좋아요"

@@ -1,12 +1,18 @@
 'use client';
 
 import Image from 'next/image';
+import { UserLikeList } from '../store/authStore';
 import CafeInfo from '@/app/_components/CafeInfo';
 import { useUserInfoStore } from '../store/authStore';
-import { UserLikeList } from '../store/authStore';
+import { useUserInfoQuery } from '../hooks/useAuthQuery';
+
 export default function Mypage() {
   const { userInfo } = useUserInfoStore();
-  console.log(userInfo);
+  const { isLoading } = useUserInfoQuery();
+
+  if (!userInfo || isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="mt-5 flex w-8/12 flex-col">
