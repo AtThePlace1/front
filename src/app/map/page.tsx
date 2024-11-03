@@ -2,11 +2,12 @@
 
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
-
 import CafeCard from '../_components/CafeCard';
+import { useCafeListStore } from '../store/cafeStore';
 
 export default function Map() {
   const mapRef = useRef<null | naver.maps.Map>(null);
+  const { filteredCafes } = useCafeListStore();
 
   useEffect(() => {
     const initMap = () => {
@@ -16,7 +17,9 @@ export default function Map() {
       };
 
       const map = new naver.maps.Map('map', mapOptions);
+      mapRef.current = map;
 
+      // 현재 위치 마커 추가
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
           const currentLocation = new naver.maps.LatLng(
@@ -31,8 +34,38 @@ export default function Map() {
           map.setCenter(currentLocation);
         });
       }
+      addCafeMarkers(map);
     };
 
+    const addCafeMarkers = (map: naver.maps.Map) => {
+      if (filteredCafes.length > 0) {
+        filteredCafes.forEach((cafe) => {
+          const cafeLocation = new naver.maps.LatLng(
+            cafe.latitude,
+            cafe.longitude
+          );
+          const marker = new naver.maps.Marker({
+            position: cafeLocation,
+            map: map,
+            title: cafe.cafeName,
+          });
+
+          // 마커 클릭 시 정보 창 표시
+          const infoWindow = new naver.maps.InfoWindow({
+            content: `<div style="padding:10px;max-width:200px;">
+              <h3>${cafe.cafeName}</h3>
+              <p>${cafe.location}</p>
+            </div>`,
+          });
+
+          naver.maps.Event.addListener(marker, 'click', () => {
+            infoWindow.open(map, marker);
+          });
+        });
+      }
+    };
+
+    // 네이버 지도 API 스크립트 로드
     if (window.naver && window.naver.maps) {
       initMap();
     } else {
@@ -41,7 +74,7 @@ export default function Map() {
       mapScript.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_ID_KEY}`;
       document.head.appendChild(mapScript);
     }
-  }, []);
+  }, [filteredCafes]);
 
   // 현재 위치로 지도 중심 이동
   const handleCurrentLocationClick = () => {

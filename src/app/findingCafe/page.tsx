@@ -1,9 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import ProgressBar from '../_components/ProgressBar';
-import { useProgressBarStore } from '../store/cafeStore';
 import { useCafeFilterQuery } from '../hooks/useCafeQuery';
+import { useProgressBarStore, useCafeListStore } from '../store/cafeStore';
 
 const questions = [
   {
@@ -36,8 +37,10 @@ interface Answers {
 }
 
 export default function FindingCafe() {
+  const router = useRouter();
   const currentStep = useProgressBarStore((state) => state.currentStep);
   const setCurrentStep = useProgressBarStore((state) => state.setCurrentStep);
+  const { setFilteredCafes } = useCafeListStore();
   const [answers, setAnswers] = useState<Answers>({});
   const cafeFilterMutation = useCafeFilterQuery();
 
@@ -65,6 +68,8 @@ export default function FindingCafe() {
     cafeFilterMutation.mutate(queryParams, {
       onSuccess: (data) => {
         console.log('결과: ', data.cafes);
+        setFilteredCafes(data.cafes);
+        router.push('/map');
         setAnswers({});
         setCurrentStep(1);
       },
