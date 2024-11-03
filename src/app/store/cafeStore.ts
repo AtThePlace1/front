@@ -11,7 +11,7 @@ export const useProgressBarStore = create<Progress>((set) => ({
   setCurrentStep: (step) => set(() => ({ currentStep: step })),
 }));
 
-export interface CafeInfoType {
+export interface Cafe {
   id: number;
   cafeName: string;
   image_main: string;
@@ -25,13 +25,27 @@ export interface CafeInfoType {
 }
 
 interface CafeStore {
-  cafeInfo: CafeInfoType | null;
-  setCafeInfo: (cafe: CafeInfoType) => void;
+  cafeInfo: Cafe | null;
+  setCafeInfo: (cafe: Cafe) => void;
   clearCafeInfo: () => void;
 }
 
+// 카페 정보
 export const useCafeInfoStore = create<CafeStore>((set) => ({
   cafeInfo: null,
   setCafeInfo: (cafe) => set({ cafeInfo: cafe }),
   clearCafeInfo: () => set({ cafeInfo: null }),
+}));
+
+interface CafeListStore {
+  filteredCafes: Cafe[];
+  setFilteredCafes: (cafes: Cafe[]) => void;
+  clearFilteredCafes: () => void;
+}
+
+// 필터링 카페 리스트
+export const useCafeListStore = create<CafeListStore>((set) => ({
+  filteredCafes: [],
+  setFilteredCafes: (cafes) => set({ filteredCafes: cafes }),
+  clearFilteredCafes: () => set({ filteredCafes: [] }),
 }));
