@@ -1,14 +1,15 @@
 'use client';
 
 import { useState } from 'react';
+import { faker } from '@faker-js/faker';
 import { useSignupMutation } from '../hooks/useAuthQuery';
+import SignupFormField from '../_components/SignupFormField';
+import { handleError, SignupError } from '../utils/errorHandler';
 import {
   validateEmailForm,
   validatePasswordForm,
   checkConfirmPassword,
 } from '../utils/validators';
-import SignupFormField from '../_components/SignupFormField';
-import { handleError, SignupError } from '../utils/errorHandler';
 
 interface SignupFormData {
   email: string;
@@ -24,7 +25,7 @@ export default function Signup() {
     password: '',
     confirmPassword: '',
     nickname: '',
-    profile_image: '/images/coffee-bean.png',
+    profile_image: faker.image.avatar(),
   });
 
   const [errors, setErrors] = useState<SignupError>({
@@ -68,7 +69,7 @@ export default function Signup() {
 
       signupMutate(formData, {
         onError: (error: any) => {
-          const errorMessage = error.response?.data.message;
+          const errorMessage = error.response?.data;
           handleError(errorMessage, setErrors);
         },
       });
