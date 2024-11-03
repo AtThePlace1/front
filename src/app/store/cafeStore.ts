@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 /** 진행바 */
 interface Progress {
@@ -13,15 +14,15 @@ export const useProgressBarStore = create<Progress>((set) => ({
 
 export interface Cafe {
   id: number;
-  cafeName: string;
+  cafe_name: string;
   image_main: string;
   image_menu: string;
-  openingHours: string;
+  opening_hours: string;
   location: string;
   latitude: number;
   longitude: number;
-  contactNumber: string;
-  sns: string;
+  contact_number: string;
+  sns_account: string;
 }
 
 interface CafeStore {
@@ -40,12 +41,17 @@ export const useCafeInfoStore = create<CafeStore>((set) => ({
 interface CafeListStore {
   filteredCafes: Cafe[];
   setFilteredCafes: (cafes: Cafe[]) => void;
-  clearFilteredCafes: () => void;
 }
 
 // 필터링 카페 리스트
-export const useCafeListStore = create<CafeListStore>((set) => ({
-  filteredCafes: [],
-  setFilteredCafes: (cafes) => set({ filteredCafes: cafes }),
-  clearFilteredCafes: () => set({ filteredCafes: [] }),
-}));
+export const useCafeListStore = create<CafeListStore>()(
+  persist(
+    (set) => ({
+      filteredCafes: [],
+      setFilteredCafes: (cafes) => set({ filteredCafes: cafes }),
+    }),
+    {
+      name: 'filteredCafes',
+    }
+  )
+);

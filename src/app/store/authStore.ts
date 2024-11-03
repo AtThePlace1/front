@@ -46,7 +46,7 @@ interface UserStore {
   setUserInfo: (user: UserInfo) => void;
   clearUserInfo: () => void;
   addLikeList: (cafe: UserLikeList) => void;
-  removeLikeList: (cafeId: number) => void;
+  removeLikeList: (id: number) => void;
 }
 export const useUserInfoStore = create<UserStore>()(
   persist(
@@ -60,12 +60,12 @@ export const useUserInfoStore = create<UserStore>()(
             likeList: [...state.userInfo.likeList, cafe],
           },
         })),
-      removeLikeList: (cafeId) =>
+      removeLikeList: (id) =>
         set((state) => ({
           userInfo: {
             ...state.userInfo,
             likeList: state.userInfo.likeList.filter(
-              (cafe) => cafe.cafe_id !== cafeId
+              (cafe) => cafe.cafe_id !== id
             ),
           },
         })),
