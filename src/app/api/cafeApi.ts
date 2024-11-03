@@ -1,10 +1,8 @@
 import api from './api';
-import { CafeInfoType } from '../store/cafeStore';
+import { Cafe } from '../store/cafeStore';
 
 // 카페 정보 요청
-export const fetchCafeDetail = async (
-  cafeId: number
-): Promise<CafeInfoType> => {
+export const fetchCafeDetail = async (cafeId: number): Promise<Cafe> => {
   try {
     const response = await api.get(`/cafe/detail/${cafeId}`);
     const cafeData = response.data.cafe[0];

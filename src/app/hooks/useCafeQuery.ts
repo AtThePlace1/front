@@ -1,12 +1,11 @@
 'use client';
 
+import { Cafe } from '../store/cafeStore';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { fetchCafeDetail } from '../api/cafeApi';
-import { CafeInfoType } from '../store/cafeStore';
-import { fetchFilteringCafeData } from '../api/cafeApi';
+import { fetchCafeDetail, fetchFilteringCafeData } from '../api/cafeApi';
 
 export const useFetchCafeDetail = (cafeId: number) => {
-  return useQuery<CafeInfoType, Error>({
+  return useQuery<Cafe, Error>({
     queryKey: ['cafeDetail', cafeId],
     queryFn: () => fetchCafeDetail(cafeId),
   });
