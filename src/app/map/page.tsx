@@ -8,6 +8,7 @@ import { useCafeListStore } from '../store/cafeStore';
 export default function Map() {
   const mapRef = useRef<null | naver.maps.Map>(null);
   const { filteredCafes } = useCafeListStore();
+  const cafeCardRefs = useRef<{ [key: number]: HTMLLIElement | null }>({});
 
   useEffect(() => {
     const initMap = () => {
@@ -45,7 +46,29 @@ export default function Map() {
 
           naver.maps.Event.addListener(marker, 'click', () => {
             infoWindow.open(map, marker);
+            centerMapToMarker(map, cafeLocation);
+            centerCafeCard(cafe.id);
           });
+        });
+      }
+    };
+
+    // 마커 클릭 시 지도를 마커 위치로 중앙 이동
+    const centerMapToMarker = (
+      map: naver.maps.Map,
+      location: naver.maps.LatLng
+    ) => {
+      map.setCenter(location);
+    };
+
+    // 마커 클릭 시 해당 CafeCard 중앙 배치
+    const centerCafeCard = (cafeId: number) => {
+      const cardElement = cafeCardRefs.current[cafeId];
+      if (cardElement) {
+        cardElement.scrollIntoView({
+          behavior: 'smooth',
+          inline: 'center',
+          block: 'nearest',
         });
       }
     };
@@ -60,6 +83,11 @@ export default function Map() {
       document.head.appendChild(mapScript);
     }
   }, [filteredCafes]);
+
+  // ref를 설정하는 콜백 함수를 변수에 저장
+  const setCafeCardRef = (cafeId: number) => (el: HTMLLIElement | null) => {
+    cafeCardRefs.current[cafeId] = el;
+  };
 
   // 현재 위치로 지도 중심 이동
   const handleCurrentLocationClick = () => {
@@ -93,7 +121,11 @@ export default function Map() {
       <div className="absolute bottom-10 w-full px-5">
         <ul className="scrollbar-hide flex flex-row space-x-4 overflow-x-scroll">
           {filteredCafes.map((cafe) => (
-            <CafeCard key={cafe.id} cafe={cafe} />
+            <CafeCard
+              key={cafe.id}
+              cafe={cafe}
+              ref={setCafeCardRef(cafe.id)} // ref 전달
+            />
           ))}
         </ul>
       </div>

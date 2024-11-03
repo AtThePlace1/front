@@ -1,14 +1,19 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import React, { forwardRef } from 'react';
 import { Cafe } from '../store/cafeStore';
 
 interface CafeCardProps {
   cafe: Cafe;
 }
 
-export default function CafeCard({ cafe }: CafeCardProps) {
+const CafeCard = forwardRef<HTMLLIElement, CafeCardProps>(({ cafe }, ref) => {
   return (
-    <li className="min-w-[250px] flex-none rounded-lg bg-white p-4 shadow-lg">
+    <li
+      key={cafe.id}
+      ref={ref}
+      className="min-w-[250px] flex-none rounded-lg bg-white p-4 shadow-lg"
+    >
       <Link
         href={`/detail/${cafe.id}`}
         className="flex cursor-pointer flex-row transition-shadow hover:shadow-lg"
@@ -33,4 +38,8 @@ export default function CafeCard({ cafe }: CafeCardProps) {
       </Link>
     </li>
   );
-}
+});
+
+CafeCard.displayName = 'CafeCard'; // forwardRef 사용 시 컴포넌트 이름을 지정해주는 것이 좋습니다.
+
+export default CafeCard;
