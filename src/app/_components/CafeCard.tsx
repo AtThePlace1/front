@@ -25,7 +25,7 @@ const CafeCard = forwardRef<HTMLLIElement, CafeCardProps>(({ cafe }, ref) => {
           <p className="text-sm text-gray-500">{cafe.opening_hours}</p>
           <p className="text-sm text-gray-500">{cafe.contact_number}</p>
           <p className="truncate text-sm text-gray-500">
-            서울 마포구 양화로11길 50 해동빌딩 1층~지하1층
+            {cafe.location_address}
           </p>
         </div>
         <Image
