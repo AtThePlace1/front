@@ -12,28 +12,14 @@ export default function Map() {
   useEffect(() => {
     const initMap = () => {
       const mapOptions = {
-        center: new naver.maps.LatLng(37.3595704, 127.105399),
-        zoom: 10,
+        center: new naver.maps.LatLng(37.5513332, 126.9133705), // 초기 중심 위치 설정
+        zoom: 14,
       };
 
       const map = new naver.maps.Map('map', mapOptions);
       mapRef.current = map;
 
-      // 현재 위치 마커 추가
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-          const currentLocation = new naver.maps.LatLng(
-            position.coords.latitude,
-            position.coords.longitude
-          );
-          new naver.maps.Marker({
-            position: currentLocation,
-            map: map,
-            title: 'My Location',
-          });
-          map.setCenter(currentLocation);
-        });
-      }
+      // 필터링된 카페들의 마커 추가
       addCafeMarkers(map);
     };
 
@@ -47,14 +33,13 @@ export default function Map() {
           const marker = new naver.maps.Marker({
             position: cafeLocation,
             map: map,
-            title: cafe.cafeName,
+            title: cafe.cafe_name,
           });
 
           // 마커 클릭 시 정보 창 표시
           const infoWindow = new naver.maps.InfoWindow({
             content: `<div style="padding:10px;max-width:200px;">
-              <h3>${cafe.cafeName}</h3>
-              <p>${cafe.location}</p>
+              <h3 style="color: black; font-size: 12px;">${cafe.cafe_name}</h3>
             </div>`,
           });
 
@@ -105,8 +90,12 @@ export default function Map() {
           height={25}
         />
       </button>
-      <div className="absolute bottom-20 w-full">
-        <CafeCard />
+      <div className="absolute bottom-10 w-full px-5">
+        <ul className="scrollbar-hide flex flex-row space-x-4 overflow-x-scroll">
+          {filteredCafes.map((cafe) => (
+            <CafeCard key={cafe.id} cafe={cafe} />
+          ))}
+        </ul>
       </div>
     </div>
   );
