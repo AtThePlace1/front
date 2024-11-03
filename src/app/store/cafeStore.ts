@@ -14,6 +14,8 @@ export const useProgressBarStore = create<Progress>((set) => ({
 export interface CafeInfoType {
   id: number;
   cafeName: string;
+  image_main: string;
+  image_menu: string;
   openingHours: string;
   location: string;
   latitude: number;

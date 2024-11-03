@@ -12,6 +12,8 @@ export const fetchCafeDetail = async (
     return {
       id: cafeData.id,
       cafeName: cafeData.cafe_name,
+      image_main: cafeData.image_main,
+      image_menu: cafeData.image_menu,
       openingHours: cafeData.opening_hours,
       location: cafeData.location_address,
       latitude: cafeData.latitude,

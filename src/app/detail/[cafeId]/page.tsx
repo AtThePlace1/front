@@ -86,7 +86,7 @@ export default function Detail() {
 
       <picture className="mt-8 flex justify-center">
         <Image
-          src={'/images/어반플렌트_2.jpeg'}
+          src={cafeInfo.image_main}
           width={270}
           height={200}
           className="rounded-lg"
@@ -133,7 +133,7 @@ export default function Detail() {
 
           <li className="mt-10">
             <Image
-              src={'/images/어반_멘.jpeg'}
+              src={cafeInfo.image_menu}
               alt="메뉴판"
               width={140}
               height={200}

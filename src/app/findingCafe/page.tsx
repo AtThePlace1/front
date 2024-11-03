@@ -64,7 +64,7 @@ export default function FindingCafe() {
 
     cafeFilterMutation.mutate(queryParams, {
       onSuccess: (data) => {
-        console.log('결과: ', data);
+        console.log('결과: ', data.cafes);
         setAnswers({});
         setCurrentStep(1);
       },
