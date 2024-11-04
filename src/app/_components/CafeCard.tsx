@@ -12,7 +12,7 @@ const CafeCard = forwardRef<HTMLLIElement, CafeCardProps>(({ cafe }, ref) => {
     <li
       key={cafe.id}
       ref={ref}
-      className="min-w-[250px] flex-none rounded-lg bg-white p-4 shadow-lg"
+      className="h-32 min-w-[220px] flex-none rounded-lg bg-white p-4 shadow-lg"
     >
       <Link
         href={`/detail/${cafe.id}`}
@@ -32,7 +32,7 @@ const CafeCard = forwardRef<HTMLLIElement, CafeCardProps>(({ cafe }, ref) => {
           src={'/images/어반플렌트_2.jpeg'}
           alt={`${cafe.cafe_name} 이미지`}
           width={80}
-          height={70}
+          height={60}
           className="rounded-md object-cover"
         />
       </Link>

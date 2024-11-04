@@ -118,8 +118,8 @@ export default function Map() {
           height={25}
         />
       </button>
-      <div className="absolute bottom-10 w-full px-5">
-        <ul className="scrollbar-hide flex flex-row space-x-4 overflow-x-scroll">
+      <div className="absolute bottom-8 w-full px-5">
+        <ul className="scrollbar-hide flex flex-row space-x-4 overflow-y-hidden overflow-x-scroll">
           {filteredCafes.map((cafe) => (
             <CafeCard
               key={cafe.id}
