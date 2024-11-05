@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { faker } from '@faker-js/faker';
+import { useRouter } from 'next/navigation';
 import { useSignupMutation } from '../hooks/useAuthQuery';
 import SignupFormField from '../_components/SignupFormField';
 import { handleError, SignupError } from '../utils/errorHandler';
@@ -20,6 +21,7 @@ interface SignupFormData {
 }
 
 export default function Signup() {
+  const router = useRouter();
   const [formData, setFormData] = useState<SignupFormData>({
     email: '',
     password: '',
@@ -68,6 +70,9 @@ export default function Signup() {
       });
 
       signupMutate(formData, {
+        onSuccess: () => {
+          router.push('/');
+        },
         onError: (error: any) => {
           const errorMessage = error.response?.data;
           handleError(errorMessage, setErrors);
