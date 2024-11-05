@@ -31,11 +31,12 @@ export const useAuthStore = create<AuthStore>((set) => ({
 export interface UserLikeList {
   cafe_id: number;
   cafe_name: string;
+  cafe_image: string;
   opening_hours: string;
   contact_number: string;
   location_address: string;
 }
-interface UserInfo {
+export interface UserInfo {
   nickname: string;
   profile_image: string;
   likeList: UserLikeList[];

@@ -29,7 +29,7 @@ const CafeCard = forwardRef<HTMLLIElement, CafeCardProps>(({ cafe }, ref) => {
           </p>
         </div>
         <Image
-          src={'/images/어반플렌트_2.jpeg'}
+          src={cafe.image_main}
           alt={`${cafe.cafe_name} 이미지`}
           width={80}
           height={60}
