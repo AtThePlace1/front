@@ -18,7 +18,8 @@ export interface Cafe {
   image_main: string;
   image_menu: string;
   opening_hours: string;
-  location_address: string;
+  location?: string;
+  location_address?: string;
   latitude: number;
   longitude: number;
   contact_number: string;
