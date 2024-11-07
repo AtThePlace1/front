@@ -59,11 +59,11 @@ body {
 }
 
 .bgBox {
-  @apply relative mt-3 flex h-dvh w-dvw justify-center;
+  @apply relative mt-14 flex h-full w-full justify-center overflow-hidden;
 }
 
 .bgImage {
-  @apply absolute z-[-1] h-dvh w-dvw scale-110 object-cover blur-[2px];
+  @apply absolute z-[-1] h-dvh w-full scale-110 object-cover blur-[2px];
 }
 
 .inputCommon {
