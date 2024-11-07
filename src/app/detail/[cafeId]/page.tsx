@@ -2,13 +2,14 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { fetchCafeDetail } from '@/app/api/cafeApi';
 import { useRouter, useParams } from 'next/navigation';
 import { useCafeInfoStore } from '@/app/store/cafeStore';
 import { useUserInfoStore } from '@/app/store/authStore';
 import { useUserInfoQuery } from '@/app/hooks/useAuthQuery';
 import { useLikeToggleMutation } from '@/app/hooks/userLikeListQuery';
+import LoadingOverlay from '@/app/_components/LoadingOverlay';
 
 export default function Detail() {
   const router = useRouter();
@@ -20,7 +21,6 @@ export default function Detail() {
   const isLiked = userInfo.likeList.some(
     (cafe) => cafe.cafe_id === cafeInfo?.id
   );
-  const [isImageLoaded, setIsImageLoaded] = useState(false); // 이미지 로드 상태 추적
 
   useEffect(() => {
     const loadCafeDetail = async () => {
@@ -55,7 +55,7 @@ export default function Detail() {
 
   // 카페 정보 불러오기
   if (!cafeInfo) {
-    return <div>Loading...</div>;
+    return <LoadingOverlay />;
   }
 
   return (
@@ -68,7 +68,6 @@ export default function Detail() {
           fill
           priority
           aria-hidden="true"
-          onLoad={() => setIsImageLoaded(true)}
         />
       </div>
 
@@ -107,7 +106,7 @@ export default function Detail() {
           />
         </picture>
 
-        <section className="mt-10 rounded-lg p-4">
+        <section className="mt-5 rounded-lg p-4">
           <h2 className="text-lg font-extrabold">카페 정보</h2>
           <div className="h-[1px] w-full bg-white" />
           <ul className="mt-2 flex flex-col gap-1">
@@ -151,7 +150,7 @@ export default function Detail() {
               )}
             </li>
 
-            <li className="mt-10">
+            <li className="mt-5">
               <Image
                 src={cafeInfo.image_menu}
                 alt="메뉴판"
