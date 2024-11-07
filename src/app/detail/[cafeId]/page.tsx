@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchCafeDetail } from '@/app/api/cafeApi';
 import { useRouter, useParams } from 'next/navigation';
 import { useCafeInfoStore } from '@/app/store/cafeStore';
@@ -20,6 +20,7 @@ export default function Detail() {
   const isLiked = userInfo.likeList.some(
     (cafe) => cafe.cafe_id === cafeInfo?.id
   );
+  const [isImageLoaded, setIsImageLoaded] = useState(false); // 이미지 로드 상태 추적
 
   useEffect(() => {
     const loadCafeDetail = async () => {
@@ -58,17 +59,21 @@ export default function Detail() {
   }
 
   return (
-    <div className="bgBox">
-      <Image
-        src={cafeInfo.image_main}
-        className="fixed left-0 top-0 z-[-1] h-full w-full scale-110 object-cover blur-[4px]"
-        alt=""
-        fill
-        priority
-        aria-hidden="true"
-      />
-      <div className="relative mx-auto mt-5 w-[330px]">
-        <div className="flex items-center justify-between">
+    <div className="relative flex h-full w-full justify-center">
+      <div className="absolute inset-0 z-[-1] overflow-hidden">
+        <Image
+          src={cafeInfo.image_main}
+          className="h-full w-full scale-110 object-cover blur-[4px]"
+          alt=""
+          fill
+          priority
+          aria-hidden="true"
+          onLoad={() => setIsImageLoaded(true)}
+        />
+      </div>
+
+      <div className="relative mx-auto w-full">
+        <div className="flexBetween fixed top-0 z-10 mt-0 bg-[#353434]/70 px-5 py-2">
           <button type="button" onClick={() => router.back()}>
             <Image
               src={'/icons/backArrow.svg'}
@@ -92,7 +97,7 @@ export default function Detail() {
           </button>
         </div>
 
-        <picture className="mt-8 flex justify-center">
+        <picture className="mt-14 flex justify-center">
           <Image
             src={cafeInfo.image_main}
             width={200}
@@ -130,13 +135,20 @@ export default function Detail() {
                   alt="인스타그램 주소"
                 />
               </h3>
-              <Link
-                href={cafeInfo.sns_account}
-                className="cafeInfoValue underline underline-offset-[6px]"
-                target="_blank"
-              >
-                {cafeInfo.sns_account}
-              </Link>
+
+              {cafeInfo.sns_account ? (
+                <Link
+                  href={cafeInfo.sns_account}
+                  className="cafeInfoValue underline underline-offset-[6px]"
+                  target="_blank"
+                >
+                  {cafeInfo.sns_account
+                    .replace(/^https?:\/\/(www\.)?instagram\.com\//, '')
+                    .replace(/\/$/, '') || cafeInfo.sns_account}
+                </Link>
+              ) : (
+                'X'
+              )}
             </li>
 
             <li className="mt-10">
@@ -145,7 +157,6 @@ export default function Detail() {
                 alt="메뉴판"
                 width={140}
                 height={200}
-                className="h-[200px]"
               />
             </li>
           </ul>
