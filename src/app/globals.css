@@ -25,10 +25,6 @@
   font-family: 'InriaSerif', sans-serif;
 }
 
-.bgImage {
-  backdrop-filter: blur(10px);
-}
-
 body {
   color: #ededed;
   box-sizing: border-box;
@@ -60,6 +56,14 @@ body {
 
 .flexBetween {
   @apply flex w-full items-center justify-between;
+}
+
+.bgBox {
+  @apply relative mt-3 flex h-dvh w-dvw justify-center;
+}
+
+.bgImage {
+  @apply absolute z-[-1] h-dvh w-dvw scale-110 object-cover blur-[2px];
 }
 
 .inputCommon {

@@ -2,7 +2,6 @@ import './globals.css';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import Menu from './_components/NavMenu';
-import RandomBackground from './_components/RandomBackground';
 import UseReactQuery from './hooks/UseReactQuey';
 
 export const metadata: Metadata = {
@@ -20,7 +19,6 @@ export default function RootLayout({
     <html lang="en">
       <body className="relative flex h-dvh flex-col">
         <UseReactQuery>
-          <RandomBackground />
           <header className="flexCenter fixed z-10 w-full bg-[url('/images/blackBg.webp')] bg-cover bg-center bg-no-repeat px-10 py-5">
             <h1 className="self-center font-serif text-xl leading-5 text-slate-200 underline underline-offset-2">
               <Link href="/">AT THE PLACE</Link>

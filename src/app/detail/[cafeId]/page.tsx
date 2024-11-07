@@ -58,89 +58,99 @@ export default function Detail() {
   }
 
   return (
-    <div className="relative mx-auto mt-5 h-full w-[330px]">
-      <div className="flex items-center justify-between">
-        <button type="button" onClick={() => router.back()}>
-          <Image
-            src={'/icons/backArrow.svg'}
-            width={25}
-            height={25}
-            alt="뒤로 가기"
-          />
-        </button>
-
-        <h1 className="text-lg font-bold">{cafeInfo.cafe_name}</h1>
-
-        <button type="button" onClick={handleLikeToggle}>
-          <Image
-            src={
-              isLiked ? '/icons/heart_filled.svg' : '/icons/heart_outline.svg'
-            }
-            width={25}
-            height={25}
-            alt="좋아요"
-          />
-        </button>
-      </div>
-
-      <picture className="mt-8 flex justify-center">
-        <Image
-          src={cafeInfo.image_main}
-          width={270}
-          height={200}
-          className="rounded-lg"
-          alt="카페 대표사진"
-        />
-      </picture>
-
-      <section className="mt-10 rounded-lg p-4">
-        <h2 className="text-lg font-extrabold">카페 정보</h2>
-        <div className="h-[1px] w-full bg-white" />
-        <ul className="mt-2 flex flex-col gap-1">
-          <li className="cafeInfo" role="contentInfo">
-            <h3 className="cafeInfoKey">영업 시간 </h3>
-            <p className="cafeInfoValue">{cafeInfo.opening_hours}</p>
-          </li>
-
-          <li className="cafeInfo" role="contentInfo">
-            <h3 className="cafeInfoKey">카페 위치 </h3>
-            <p className="cafeInfoValue">{cafeInfo.location}</p>
-          </li>
-
-          <li className="cafeInfo" role="contentInfo">
-            <h3 className="cafeInfoKey">연락처 </h3>
-            <p className="cafeInfoValue">{cafeInfo.contact_number}</p>
-          </li>
-
-          <li className="cafeInfo" role="contentInfo">
-            <h3 className="cafeInfoKey">
-              <Image
-                src={'/icons/instagramSimple.svg'}
-                width={30}
-                height={30}
-                alt="인스타그램 주소"
-              />
-            </h3>
-            <Link
-              href={cafeInfo.sns_account}
-              className="cafeInfoValue underline underline-offset-[6px]"
-              target="_blank"
-            >
-              {cafeInfo.sns_account}
-            </Link>
-          </li>
-
-          <li className="mt-10">
+    <div className="bgBox">
+      <Image
+        src={cafeInfo.image_main}
+        className="fixed left-0 top-0 z-[-1] h-full w-full scale-110 object-cover blur-[4px]"
+        alt=""
+        fill
+        priority
+        aria-hidden="true"
+      />
+      <div className="relative mx-auto mt-5 w-[330px]">
+        <div className="flex items-center justify-between">
+          <button type="button" onClick={() => router.back()}>
             <Image
-              src={cafeInfo.image_menu}
-              alt="메뉴판"
-              width={140}
-              height={200}
-              className="h-[200px]"
+              src={'/icons/backArrow.svg'}
+              width={25}
+              height={25}
+              alt="뒤로 가기"
             />
-          </li>
-        </ul>
-      </section>
+          </button>
+
+          <h1 className="text-lg font-bold">{cafeInfo.cafe_name}</h1>
+
+          <button type="button" onClick={handleLikeToggle}>
+            <Image
+              src={
+                isLiked ? '/icons/heart_filled.svg' : '/icons/heart_outline.svg'
+              }
+              width={25}
+              height={25}
+              alt="좋아요"
+            />
+          </button>
+        </div>
+
+        <picture className="mt-8 flex justify-center">
+          <Image
+            src={cafeInfo.image_main}
+            width={200}
+            height={200}
+            className="rounded-lg"
+            alt="카페 대표사진"
+          />
+        </picture>
+
+        <section className="mt-10 rounded-lg p-4">
+          <h2 className="text-lg font-extrabold">카페 정보</h2>
+          <div className="h-[1px] w-full bg-white" />
+          <ul className="mt-2 flex flex-col gap-1">
+            <li className="cafeInfo" role="contentInfo">
+              <h3 className="cafeInfoKey">영업 시간 </h3>
+              <p className="cafeInfoValue">{cafeInfo.opening_hours}</p>
+            </li>
+
+            <li className="cafeInfo" role="contentInfo">
+              <h3 className="cafeInfoKey">카페 위치 </h3>
+              <p className="cafeInfoValue">{cafeInfo.location}</p>
+            </li>
+
+            <li className="cafeInfo" role="contentInfo">
+              <h3 className="cafeInfoKey">연락처 </h3>
+              <p className="cafeInfoValue">{cafeInfo.contact_number}</p>
+            </li>
+
+            <li className="cafeInfo" role="contentInfo">
+              <h3 className="cafeInfoKey">
+                <Image
+                  src={'/icons/instagramSimple.svg'}
+                  width={30}
+                  height={30}
+                  alt="인스타그램 주소"
+                />
+              </h3>
+              <Link
+                href={cafeInfo.sns_account}
+                className="cafeInfoValue underline underline-offset-[6px]"
+                target="_blank"
+              >
+                {cafeInfo.sns_account}
+              </Link>
+            </li>
+
+            <li className="mt-10">
+              <Image
+                src={cafeInfo.image_menu}
+                alt="메뉴판"
+                width={140}
+                height={200}
+                className="h-[200px]"
+              />
+            </li>
+          </ul>
+        </section>
+      </div>
     </div>
   );
 }
