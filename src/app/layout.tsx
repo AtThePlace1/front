@@ -2,6 +2,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import Header from './_components/Header';
 import UseReactQuery from './hooks/UseReactQuey';
+import Modal from './_components/Modal';
 
 export const metadata: Metadata = {
   title: 'At The Place',
@@ -23,6 +24,7 @@ export default function RootLayout({
             {children}
           </main>
         </UseReactQuery>
+        <Modal />
       </body>
     </html>
   );
