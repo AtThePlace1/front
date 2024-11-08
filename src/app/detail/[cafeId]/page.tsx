@@ -10,6 +10,7 @@ import { useUserInfoStore } from '@/app/store/authStore';
 import { useUserInfoQuery } from '@/app/hooks/useAuthQuery';
 import { useLikeToggleMutation } from '@/app/hooks/userLikeListQuery';
 import LoadingOverlay from '@/app/_components/LoadingOverlay';
+import StaticMap from '@/app/_components/StaticMap';
 
 export default function Detail() {
   const router = useRouter();
@@ -21,6 +22,8 @@ export default function Detail() {
   const isLiked = userInfo.likeList.some(
     (cafe) => cafe.cafe_id === cafeInfo?.id
   );
+
+  console.log(cafeInfo);
 
   useEffect(() => {
     const loadCafeDetail = async () => {
@@ -48,7 +51,7 @@ export default function Detail() {
     if (!cafeInfo) return;
     toggleLikeMutation.mutate(cafeInfo.id, {
       onSuccess: () => {
-        refetch(); // 좋아요/취소 후 유조 종보 재요청
+        refetch();
       },
     });
   };
@@ -149,16 +152,20 @@ export default function Detail() {
                 'X'
               )}
             </li>
-
-            <li className="mt-5">
-              <Image
-                src={cafeInfo.image_menu}
-                alt="메뉴판"
-                width={140}
-                height={200}
-              />
-            </li>
           </ul>
+
+          <div className="flexBetween mt-5 gap-4">
+            <Image
+              src={cafeInfo.image_menu}
+              alt="메뉴판"
+              width={140}
+              height={200}
+            />
+            <StaticMap
+              latitude={cafeInfo.latitude}
+              longitude={cafeInfo.longitude}
+            />
+          </div>
         </section>
       </div>
     </div>
