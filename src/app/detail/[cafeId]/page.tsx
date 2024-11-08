@@ -23,8 +23,6 @@ export default function Detail() {
     (cafe) => cafe.cafe_id === cafeInfo?.id
   );
 
-  console.log(cafeInfo);
-
   useEffect(() => {
     const loadCafeDetail = async () => {
       const cafeId = Number(params.cafeId); // useParams로 가져온 cafeId 사용
