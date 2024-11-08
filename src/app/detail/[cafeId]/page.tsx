@@ -59,11 +59,11 @@ export default function Detail() {
   }
 
   return (
-    <div className="relative flex h-full w-full justify-center">
+    <div className="relative flex w-full flex-grow justify-center">
       <div className="absolute inset-0 z-[-1] overflow-hidden">
         <Image
           src={cafeInfo.image_main}
-          className="h-full w-full scale-110 object-cover blur-[4px]"
+          className="scale-110 object-cover blur-[4px]"
           alt=""
           fill
           priority

@@ -19,7 +19,9 @@ export default function RootLayout({
       <body className="relative flex h-dvh flex-col">
         <UseReactQuery>
           <Header />
-          <main className="flex h-full flex-col items-center">{children}</main>
+          <main className="flex min-h-screen flex-col items-center">
+            {children}
+          </main>
         </UseReactQuery>
       </body>
     </html>
