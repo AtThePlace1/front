@@ -72,7 +72,7 @@ export default function FindingCafe() {
       onSuccess: (data) => {
         console.log('성공 시: ', data.cafes);
         setFilteredCafes(data.cafes);
-        // router.push('/map');
+        router.push('/map');
         setAnswers({});
         setCurrentStep(1);
       },
