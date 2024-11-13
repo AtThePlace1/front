@@ -36,9 +36,9 @@ export default function ProfileImageModal({
   return (
     <div className="flexCenter fixed inset-0 z-50 bg-black bg-opacity-50">
       <div className="relative rounded-lg bg-white p-4 shadow-lg">
-        <div className="relative h-40 w-40 overflow-hidden rounded-full">
+        <div className="flexCenter relative h-40 w-40 overflow-hidden rounded-full">
           <Image
-            src={previewImage || '/images/coffee-bean.png'} // 미리보기 이미지
+            src={previewImage || '/icons/attheplaceLogo.svg'} // 미리보기 이미지
             alt="Profile Preview"
             fill
           />
