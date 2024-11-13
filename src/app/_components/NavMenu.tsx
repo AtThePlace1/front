@@ -85,7 +85,7 @@ export default function Menu() {
                     </div>
                   </div>
                 </div>
-                <div className="mt-5pxr h-1pxr w-full border" />
+                <div className="mt-5pxr w-full border border-gray-200" />
               </li>
               <li className="py-1">
                 <Link
