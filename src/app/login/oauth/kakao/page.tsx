@@ -10,7 +10,7 @@ export default function KaKaoRedirect() {
   useEffect(() => {
     const handleKakaoAuth = async () => {
       const code = new URL(window.location.href).searchParams.get('code'); // URL에서 인가 코드 추출
-      console.log(code);
+      console.log('인가 코드: ', code);
       if (!code) {
         console.error('카카오 인증 실패: 인가 코드가 없습니다.');
         return;
@@ -18,7 +18,8 @@ export default function KaKaoRedirect() {
 
       try {
         const data = await kakaoLogin(code); // 카카오 로그인 API 호출
-        if (data.token) {
+        console.log(data);
+        if (data) {
           localStorage.setItem('token', data.token); // 토큰 저장
           router.push('/'); // 홈 페이지로 이동
         }

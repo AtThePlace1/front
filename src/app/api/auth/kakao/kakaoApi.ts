@@ -20,13 +20,13 @@ kakaoApiClient.interceptors.request.use(
   }
 );
 
-// kakaoApiClient.interceptors.response.use(
-//   (response) => response,
-//   (error) => {
-//     // 에러 처리 로직 추가 (예: 401 상태 코드 처리)
-//     console.error('API 응답 에러:', error.response || error.message);
-//     return Promise.reject(error);
-//   }
-// );
+kakaoApiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    // 에러 처리 로직 추가 (예: 401 상태 코드 처리)
+    console.error('API 응답 에러:', error.response || error.message);
+    return Promise.reject(error);
+  }
+);
 
 export default kakaoApiClient;
