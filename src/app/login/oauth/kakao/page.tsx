@@ -3,9 +3,11 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { kakaoLogin } from '@/app/api/auth/kakao/kakaoLoginApi';
+import { useUserInfoStore } from '@/app/store/authStore';
 
 export default function KaKaoRedirect() {
   const router = useRouter();
+  const { setUserInfo } = useUserInfoStore();
 
   useEffect(() => {
     const handleKakaoAuth = async () => {
@@ -21,6 +23,14 @@ export default function KaKaoRedirect() {
         console.log(data);
         if (data) {
           localStorage.setItem('token', data.token); // 토큰 저장
+
+          // store에 저장
+          setUserInfo({
+            nickname: data.user.nickname,
+            profile_image: data.user.profile_image,
+            likeList: [],
+          });
+
           router.push('/'); // 홈 페이지로 이동
         }
       } catch (error) {
