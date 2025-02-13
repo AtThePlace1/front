@@ -78,7 +78,7 @@ export default function Detail() {
             />
           </picture>
 
-          <section className="mx-2 mt-5 rounded-lg bg-[#353434]/70 p-4">
+          <section className="bg-bgColor/70 mx-2 mt-5 rounded-lg p-4">
             <h2 className="text-lg font-extrabold">카페 정보</h2>
             <div className="h-1pxr w-full bg-white" />
             <ul className="mt-2 flex flex-col gap-1">
@@ -123,12 +123,12 @@ export default function Detail() {
               </li>
               <li className="cafeInfo" role="contentInfo">
                 <h3 className="cafeInfoKey">연락처 </h3>
-                <p className="cafeInfoValue">
+                <div className="cafeInfoValue">
                   <StaticMap
                     latitude={cafeInfo.latitude}
                     longitude={cafeInfo.longitude}
                   />
-                </p>
+                </div>
               </li>
             </ul>
 

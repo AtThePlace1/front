@@ -44,7 +44,8 @@ const config: Config = {
       colors: {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
-        confirmColor: '#FF6347',
+        buttonColor: '#FF6347',
+        bgColor: '#353434',
       },
       fontFamily: {
         sans: ['var(--font-inria)', 'sans-serif'],
