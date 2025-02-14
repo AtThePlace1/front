@@ -20,6 +20,7 @@ const config: Config = {
   theme: {
     screens: {
       mobile: '375px',
+      tablet: '768px',
       desktop: '1024px',
     },
     extend: {
