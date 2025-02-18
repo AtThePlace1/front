@@ -64,10 +64,10 @@ export default function Map() {
 
   return (
     <div className="flexCenter relative h-full w-full">
-      <div id="map" className="h-full w-full"></div>
+      <div id="map" className="h-full w-full" />
       <button
         onClick={handleCurrentLocationClick}
-        className="absolute left-2 top-16 z-10 rounded border-gray-300 bg-gray-300 p-2"
+        className="absolute left-3 top-16 z-10 rounded border-gray-300 bg-gray-300 p-2 desktop:top-24"
       >
         <Image
           src={'/icons/myLocation.svg'}
