@@ -6,6 +6,7 @@ import { useMap } from '../hooks/useMap';
 import CafeCard from '../_components/CafeCard';
 import { Cafe, useCafeListStore } from '../store/cafeStore';
 import LoadingOverlay from '../_components/LoadingOverlay';
+import myLocation from '/public/icons/meMarker.svg';
 
 export default function Map() {
   const { filteredCafes } = useCafeListStore();
@@ -49,9 +50,26 @@ export default function Map() {
 
   // 현재 위치로 지도 중심 이동
   const handleCurrentLocationClick = () => {
+    const mapOptions = {
+      center: new naver.maps.LatLng(37.5513332, 126.9133705),
+      zoom: 14,
+    };
+    const map = new naver.maps.Map('map', mapOptions);
+    mapRef.current = map;
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         centerMapToMarker(position.coords.latitude, position.coords.longitude);
+        new naver.maps.Marker({
+          position: new naver.maps.LatLng(
+            position.coords.latitude,
+            position.coords.longitude
+          ),
+          map: map,
+          icon: {
+            url: myLocation.src,
+            size: new naver.maps.Size(32, 32),
+          },
+        });
       });
     }
   };
