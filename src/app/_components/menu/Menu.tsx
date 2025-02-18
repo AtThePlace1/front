@@ -60,7 +60,7 @@ export default function Menu() {
 
   // 메뉴가 열리고 닫히는 설정
   const menuClasses = classNames(
-    "fixed top-0 right-0 w-1/3 h-full z-40 transform transition-transform duration-300 bg-[url('/images/blackBg.webp')] bg-cover bg-center",
+    "fixed top-0 right-0 w-1/2 tablet:w-1/3 h-full z-40 transform transition-transform duration-300 bg-[url('/images/blackBg.webp')] bg-cover bg-center",
     'desktop:static desktop:flex desktop:items-center desktop:justify-between desktop:w-auto desktop:translate-x-0 desktop:transition-none',
     {
       'translate-x-0': isMenuOpen,
@@ -102,7 +102,7 @@ export default function Menu() {
             href="/findingCafe"
             onClick={toggleMenu}
           />
-          <MenuItem label="Map" href="/map" onClick={handleMapClick} />
+          <MenuItem label="지도" href="/map" onClick={handleMapClick} />
         </ul>
       </nav>
     </>
